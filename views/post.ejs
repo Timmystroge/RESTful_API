@@ -1,3 +1,61 @@
-<%- include("header") -%>
-<h1>Post page</h1>
-<%- include("footer") -%>
+<%- include("partials/header"); -%> <!-- Include Header -->
+<%- include("partials/bootstrap"); -%> <!-- Include styles  -->
+<style>
+.container-fluid {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+.navbar {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  letter-spacing: 5px;
+}
+.navbar-nav ul li a:hover {
+  color: #0a44b9;
+}
+.nav-link {
+  text-decoration: none;
+}
+ul li a{
+  color: #545454 !important;
+}
+ul li a:hover{
+  color: #0a44b9 !important;
+}
+.divider {
+  border-bottom: 1px solid #d9e6ff;
+}
+.divider h5 {
+  color: #0a44b9;
+}
+.divider:last-child{
+  border: 0;
+}
+.footer {
+  position: relative;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  margin-top: 2rem;
+  height: max-content;
+  padding: 2px 0;
+}
+
+.footer p {
+  margin-top: 25px;
+  font-size: 12px;
+  color: #0a44b9;
+}
+.centralize {
+ margin: 10rem 0;
+}
+</style>
+
+<h2 class="text-capitalize"><%= requestedPost.title %></h2>
+<p><%= requestedPost.content %></p>
+
+<%- include("partials/footer"); -%><!-- Include Footer -->

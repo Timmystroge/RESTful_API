@@ -1,3 +1,29 @@
-<%- include("header") -%>
-<h1>Home page</h1>
-<%- include("footer") -%>
+<%- include("partials/header"); -%>
+<h2>Home page</h2>
+<p>
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, vero ex.
+  Pariatur explicabo itaque tempora ipsum enim quasi, molestiae repudiandae.
+  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ab ducimus natus
+  temporibus recusandae nam cupiditate maxime, non fugit, officiis, illo minima.
+  Ad fugit tempora nihil inventore vitae. Voluptate illo, a officia neque eius
+  at quos, itaque vero ipsa laudantium voluptas perspiciatis cupiditate sapiente
+  accusantium aut provident corrupti facilis quas deserunt rerum ullam accusamus
+  nulla eos. Excepturi aliquid voluptates optio laboriosam.
+</p>
+<div class="posts pt-3">
+  <% if(posts.length == 0) { %>
+  <p class="text-center mt-4 text-capitalize text-danger">
+    There are no post yet!
+  </p>
+  <% } else {%> <% posts.forEach(post => { %>
+  <div class="divider pt-3">
+    <h5 class="text-capitalize"><%= post.title %></h5>
+    <!-- <p class="text-capitalize"><%= post.content %></p> -->
+    <p class="text-capitalize">
+      <% if(post.content.length > 100){ %> <%= post.content.substring(0,100) %> ... <a href="/posts/<%= post.title %>" class="text-decoration-none">Read more</a>
+      <%} else {%> <%= post.content %>. <a href="/posts/<%= post.title %>" class="text-decoration-none">Read more</a> <%}%>
+    </p>
+  </div>
+  <% })} %>
+</div>
+<%- include("partials/footer"); -%>
