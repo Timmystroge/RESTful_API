@@ -1,8 +1,8 @@
-Todo Application with express <br/>
+blog Application with express <br/>
 
 Stacks <br/>
 
-const Todo_app = {
+const blog = {
 Node,
 Express,
 dev: "Timmystroge75@gmail.com"
