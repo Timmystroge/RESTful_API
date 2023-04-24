@@ -1,10 +1,47 @@
 const _ = require("lodash");
+const mongoose = require("mongoose");
 const blogPosts = [];
+const { log } = console; /* Destructure console.log */
+// connect to database
+mongoose
+  .connect("mongodb://127.0.0.1:27017/blogDB")
+  .then(() => {
+    log("Connected to database successfully");
+  })
+  .catch(() => {
+    log("Cannot Connect to Server");
+  });
+
+//  Create Blog Post Schema
+const blogSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: String,
+    required: [true, "Author is required!"],
+  },
+});
+
+// create blog model
+const BlogPost = mongoose.model("BlogPost", blogSchema);
 
 const runBlog = function (app) {
   // home route
   app.get("/", (req, res) => {
-    res.render("home", { posts: blogPosts });
+    // fetch data from database
+    BlogPost.find()
+      .then((data) => {
+        res.render("home", { posts: data });
+      })
+      .catch((err) => {
+        log(err);
+      });
   });
 
   // about route
@@ -24,44 +61,44 @@ const runBlog = function (app) {
 
   // compose route == POST
   app.post("/compose", (req, res) => {
-    const newPost = {
-      title: req.body.title,
-      content: req.body.content,
-    };
-    blogPosts.push(newPost);
+    // get value of new post inputs from frontend using parser
+    const title = _.lowerCase(req.body.title);
+    const content = req.body.content;
+
+    // insert new post details to database
+    const createNewPost = new BlogPost({
+      title: title,
+      content: content,
+      author: "TimmyStroge",
+    });
+    /* Save data to database */
+    createNewPost.save();
 
     // Redirection
     res.redirect("/");
-  });
-
-  app.get("/post", (req, res) => {
-    const postDetails = {
-      title: "one",
-      content: "two",
-    };
-    res.render("post", { requestedPost: postDetails });
   });
 
   app.get("/posts/:postId", function (req, res) {
     // convert requested id to lowercase
     const requestedID = _.lowerCase(req.params.postId); /* title */
 
-    if (blogPosts.length > 0) {
-      blogPosts.forEach(function (postTitle) {
-        //convert Stored details to lowercse
-        const storedTitle = _.lowerCase(postTitle.title);
+    BlogPost.find()
+      .then((data) => {
+        data.forEach((post) => {
+          const postTitleFromDb = post.title;
 
-        if (storedTitle === requestedID) {
-          const postDetails = {
-            title: postTitle.title,
-            content: postTitle.content,
-          };
-          res.render("post", { requestedPost: postDetails });
-        }
+          if (postTitleFromDb === requestedID) {
+            const postDetails = {
+              title: post.title,
+              content: post.content,
+            };
+            res.render("post", { requestedPost: postDetails });
+          }
+        });
+      })
+      .catch((err) => {
+        log(err);
       });
-    } else {
-      res.redirect("/");
-    }
   });
 
   //   404 page
