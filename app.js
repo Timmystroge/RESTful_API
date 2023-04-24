@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 blogControllers(app);
 
-app.listen(process.env.PORT || process.env.FALLBACK_PORT, () => {
+app.listen(3000 || 3000, () => {
   console.log("Server Is Ready! Happy Coding Stroge!");
 });
 

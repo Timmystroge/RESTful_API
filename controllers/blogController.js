@@ -4,10 +4,10 @@ const dotenv = require("dotenv");
 const { log } = console; /* Destructure console.log */
 
 // initialize .env
-dotenv.config()
+dotenv.config();
 // connect to database
 mongoose
-  .connect(process.env.BACKEND_API)
+  .connect("mongodb://127.0.0.1:27017/blogDB")
   .then(() => {
     log("Connected to database successfully");
   })
@@ -72,18 +72,19 @@ const runBlog = function (app) {
     const createNewPost = new BlogPost({
       title: title,
       content: content,
-      author: process.env.BLOG_AUTHOR,
+      author: "TimmyStrogw",
     });
     /* Save data to database */
-    createNewPost.save();
-
-    // Redirection
-    res.redirect("/");
+    createNewPost.save().then(() => {
+      // Redirection
+      res.redirect("/");
+    });
   });
 
   app.get("/posts/:postId", function (req, res) {
     // convert requested id to lowercase
     const requestedID = _.lowerCase(req.params.postId); /* title */
+
 
     BlogPost.find()
       .then((data) => {
