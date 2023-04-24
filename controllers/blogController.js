@@ -1,15 +1,18 @@
 const _ = require("lodash");
 const mongoose = require("mongoose");
-const blogPosts = [];
+const dotenv = require("dotenv");
 const { log } = console; /* Destructure console.log */
+
+// initialize .env
+dotenv.config()
 // connect to database
 mongoose
-  .connect("mongodb://127.0.0.1:27017/blogDB")
+  .connect(process.env.BACKEND_API)
   .then(() => {
     log("Connected to database successfully");
   })
   .catch(() => {
-    log("Cannot Connect to Server");
+    log("Cannot Connect to Database");
   });
 
 //  Create Blog Post Schema
@@ -69,7 +72,7 @@ const runBlog = function (app) {
     const createNewPost = new BlogPost({
       title: title,
       content: content,
-      author: "TimmyStroge",
+      author: process.env.BLOG_AUTHOR,
     });
     /* Save data to database */
     createNewPost.save();

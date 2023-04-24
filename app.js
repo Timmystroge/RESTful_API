@@ -9,6 +9,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 blogControllers(app);
 
-app.listen(3000 || 3000, () => {
+app.listen(process.env.PORT || process.env.FALLBACK_PORT, () => {
   console.log("Server Is Ready! Happy Coding Stroge!");
 });
+
+module.exports = app
