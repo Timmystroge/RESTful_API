@@ -1,10 +1,13 @@
-blog Application with express <br/>
+Building y own RESTful API <br/>
 
 Stacks <br/>
 
-const blog = {
+const RESTFUL_API = {
 Node,
 Express,
+mongoose,
+tech: {
+"Thunder CLient"
+}
 dev: "Timmystroge75@gmail.com"
 }
-
