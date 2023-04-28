@@ -112,7 +112,7 @@ app
 
   //delete
   .delete(function (req, res) {
-    Article.deleteMany({ title: req.params.id }).then(function () {
+    Article.deleteOne({ title: req.params.id }).then(function () {
       res.send("Doc Deleted");
     });
   });
